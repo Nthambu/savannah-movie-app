@@ -1,0 +1,37 @@
+<div class="container my-4">
+  <h1 class="mb-4">Movie Finder</h1>
+  <!-- <app-search-bar (searchQueryChange)="handleSearch($event)"></app-search-bar> -->
+  <!-- display the spinner/loader only when onLoading is set to true -->
+  <!-- <div *ngIf="isLoading" class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div> -->
+  <!--   A 'No Results' message -->
+  <!-- <div *ngIf="!isLoading && movies.length === 0" class="text-center my-5">
+    <h2>No movies found.</h2>
+    <p>Try a different search term or check for typos.</p>
+  </div> -->
+  <!-- Movie Grid -->
+  <div
+    *ngIf="!isLoading && movies.length > 0"
+    class="row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4"
+  >
+    <div class="col" *ngFor="let movie of movies">
+      <app-movie-card [movie]="movie"></app-movie-card>
+    </div>
+  </div>
+  <!--  the Load More button section -->
+  <div *ngIf="!isLoading && movies.length > 0" class="text-center my-4">
+    <button class="btn btn-primary" (click)="loadMore()" [disabled]="isLoadingMore">
+      <!-- 2. Show a spinner inside the button while loading more -->
+      <span
+        *ngIf="isLoadingMore"
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      <!-- 3. Show different text based on loading state -->
+      <span *ngIf="!isLoadingMore">Load More</span>
+      <span *ngIf="isLoadingMore"> Loading...</span>
+    </button>
+  </div>
+</div>
