@@ -4,14 +4,14 @@ import { MovieService } from './movie-service';
 import { MovieDto, ApiResultDto } from '../models/movie.model';
 import { MovieDetailsDto } from '../models/movie-details.model';
 import { environment } from '../../environments/environment.development';
-
+import { provideRouter } from '@angular/router';
 describe('MovieService', () => {
   let service: MovieService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule,provideRouter],
       providers: [MovieService],
     });
     service = TestBed.inject(MovieService);
