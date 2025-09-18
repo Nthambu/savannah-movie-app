@@ -1,15 +1,15 @@
 <div class="container my-4">
   <h1 class="mb-4">Movie Finder</h1>
-  <!-- <app-search-bar (searchQueryChange)="handleSearch($event)"></app-search-bar> -->
+  <app-search-bar (searchQueryChange)="handleSearch($event)"></app-search-bar>
   <!-- display the spinner/loader only when onLoading is set to true -->
   <!-- <div *ngIf="isLoading" class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
   </div> -->
   <!--   A 'No Results' message -->
-  <!-- <div *ngIf="!isLoading && movies.length === 0" class="text-center my-5">
+  <div *ngIf="!isLoading && movies.length === 0" class="text-center my-5">
     <h2>No movies found.</h2>
     <p>Try a different search term or check for typos.</p>
-  </div> -->
+  </div>
   <!-- Movie Grid -->
   <div
     *ngIf="!isLoading && movies.length > 0"

@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MovieService } from '../../services/movie-service';
 import { MovieDto } from '../../models/movie.model';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { MovieCard } from '../movie-card/movie-card';
+import { SearchBar } from "../search-bar/search-bar";
 
 @Component({
   selector: 'app-home',
   
-  imports: [CommonModule,MovieCard],
+  imports: [CommonModule, MovieCard, SearchBar,NgIf],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

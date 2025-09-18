@@ -2,8 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MovieCard } from './movie-card';
 import { MovieService } from '../../services/movie-service';
 import { MovieDto } from '../../models/movie.model';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideRouter } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MovieCard Component', () => {
   let component: MovieCard;
@@ -14,14 +13,8 @@ describe('MovieCard Component', () => {
     movieServiceStub = { imageBaseUrl: 'https://image.tmdb.org/t/p/w500' };
 
     await TestBed.configureTestingModule({
-      imports: [
-        MovieCard,
-        provideHttpClientTesting(),
-        provideRouter([]),   // ✅ move here instead of providers
-      ],
-      providers: [
-        { provide: MovieService, useValue: movieServiceStub },
-      ],
+      imports: [MovieCard, RouterTestingModule], // ✅ use RouterTestingModule
+      providers: [{ provide: MovieService, useValue: movieServiceStub }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MovieCard);

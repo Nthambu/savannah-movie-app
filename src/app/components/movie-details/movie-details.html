@@ -1,0 +1,82 @@
+<!-- Loader -->
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center vh-100">
+  <div class="spinner-border text-primary" style="width: 3rem; height: 3rem" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<!-- Error/Not Found Message -->
+<div *ngIf="!isLoading && !movie" class="container text-center my-5">
+  <h2>Movie Not Found</h2>
+  <p>We couldn't find the movie you're looking for.</p>
+  <a routerLink="/home" class="btn btn-primary">Back to Home</a>
+</div>
+
+<!-- Main Content -->
+<div *ngIf="!isLoading && movie">
+  <!-- Backdrop Header -->
+  <div class="backdrop-container" [style.background-image]="'url(' + backdropUrl + ')'">
+    <div class="backdrop-overlay"></div>
+  </div>
+
+  <div class="container main-content">
+    <div class="row">
+      <!-- Left Column: Poster -->
+      <div class="col-md-4 text-center">
+        <img
+          [src]="posterUrl"
+          class="img-fluid rounded shadow-lg poster-image"
+          [alt]="movie.title"
+        />
+      </div>
+
+      <!-- Right Column: Details -->
+      <div class="col-md-8">
+        <h1>{{ movie.title }}</h1>
+        <p class="text-muted">
+          {{ movie.release_date | date : 'longDate' }} &bull; {{ movie.runtime }} minutes
+        </p>
+
+        <div class="mb-3">
+          <span *ngFor="let genre of movie.genres" class="badge bg-secondary me-2">{{
+            genre.name
+          }}</span>
+        </div>
+
+        <p><strong>Rating:</strong> {{ movie.vote_average | number : '1.1-1' }} / 10</p>
+
+        <h3>Overview</h3>
+        <p>{{ movie.overview }}</p>
+
+        <a routerLink="/home" class="btn btn-outline-secondary mt-3"> &larr; Back to List </a>
+      </div>
+    </div>
+
+    <!-- Cast Section -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <h2>Top Billed Cast</h2>
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
+          <!-- Slice pipe shows only the first 12 actors -->
+          <div class="col" *ngFor="let member of movie.credits.cast | slice : 0 : 12">
+            <div class="card h-100">
+              <img
+                [src]="
+                  member.profile_path
+                    ? 'https://image.tmdb.org/t/p/w185' + member.profile_path
+                    : 'https://placeholder.com/185x278?text=No+Image'
+                "
+                class="card-img-top"
+                [alt]="member.name"
+              />
+              <div class="card-body p-2">
+                <h6 class="card-title mb-0">{{ member.name }}</h6>
+                <p class="card-text text-muted small">{{ member.character }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

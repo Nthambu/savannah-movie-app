@@ -1,18 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { MovieService } from './movie-service';
 import { MovieDto, ApiResultDto } from '../models/movie.model';
 import { MovieDetailsDto } from '../models/movie-details.model';
 import { environment } from '../../environments/environment.development';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 describe('MovieService', () => {
   let service: MovieService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule,provideRouter],
-      providers: [MovieService],
+      imports: [HttpClientTestingModule],
+      providers: [MovieService,provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(), ],
     });
     service = TestBed.inject(MovieService);
     httpMock = TestBed.inject(HttpTestingController);

@@ -1,0 +1,26 @@
+.backdrop-container {
+  height: 50vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+}
+
+.backdrop-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 50%);
+}
+
+.main-content {
+  margin-top: -150px; /* Pulls the content up over the backdrop */
+  position: relative;
+  z-index: 10;
+}
+
+.poster-image {
+  max-width: 300px;
+}
