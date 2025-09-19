@@ -1,0 +1,38 @@
+name: Angular CI
+
+# This workflow runs on pushes to the 'develop' branch
+# and also on pull requests targeting the 'main' branch
+on:
+  push:
+    branches: ['develop']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build-and-test:
+    # Use a standard Linux virtual machine provided by GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checks out your repository's code so the job can access it
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Sets up the specific version of Node.js needed
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Match this with the Node version you use
+          cache: 'npm'
+
+      # Step 3: Installs all project dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Runs the linter to check for code style issues
+      - name: Run linter
+        run: ng lint
+
+      # Step 5: Runs the unit tests in a headless browser suitable for servers
+      - name: Run tests
+        run: ng test --watch=false --browsers=ChromeHeadless
