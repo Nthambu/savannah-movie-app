@@ -38,9 +38,7 @@ describe('MovieCard Component', () => {
     component.movie = mockMovie;
     component.ngOnInit();
 
-    expect(component.posterUrl).toBe(
-      `${movieServiceStub.imageBaseUrl}${mockMovie.poster_path}`
-    );
+    expect(component.posterUrl).toBe(`${movieServiceStub.imageBaseUrl}${mockMovie.poster_path}`);
   });
 
   it('should fallback to placeholder when poster_path is missing', () => {
@@ -56,8 +54,6 @@ describe('MovieCard Component', () => {
     component.movie = mockMovie;
     component.ngOnInit();
 
-    expect(component.posterUrl).toBe(
-      'https://placeholder.com/500x750?text=Image+Not+Available'
-    );
+    expect(component.posterUrl).toBe('https://placeholder.com/500x750?text=Image+Not+Available');
   });
 });

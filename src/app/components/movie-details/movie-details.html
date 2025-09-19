@@ -9,7 +9,7 @@
 <div *ngIf="!isLoading && !movie" class="container text-center my-5">
   <h2>Movie Not Found</h2>
   <p>We couldn't find the movie you're looking for.</p>
-  <a routerLink="/home" class="btn btn-primary">Back to Home</a>
+  <a [routerLink]="['/home']" class="btn btn-primary">Back to Home</a>
 </div>
 
 <!-- Main Content -->
