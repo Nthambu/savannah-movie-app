@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
+  apiKey: '1be5626f968eda9f5f59456e938ffa02',
+  apiUrl: 'https://api.themoviedb.org/3',
   firebase: {
     apiKey: 'AIzaSyDEjz4MakzMeGrfnFGtn0yzUQQ2RN1tVPw',
     authDomain: 'savannah-movie-app.firebaseapp.com',
