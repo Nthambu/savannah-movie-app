@@ -9,7 +9,6 @@ describe('Home Component', () => {
   let component: Home;
   let fixture: ComponentFixture<Home>;
   let movieServiceSpy: jasmine.SpyObj<MovieService>;
-
   const dummyMovies: MovieDto[] = [
     {
       id: 1,
@@ -28,7 +27,6 @@ describe('Home Component', () => {
       vote_average: 8.0,
     },
   ];
-
   beforeEach(async () => {
     const spy = jasmine.createSpyObj('MovieService', [
       'getPopularMovies',
@@ -52,9 +50,7 @@ describe('Home Component', () => {
 
   it('should load popular movies on init', () => {
     movieServiceSpy.getPopularMovies.and.returnValue(of(dummyMovies));
-
     component.ngOnInit();
-
     expect(movieServiceSpy.getPopularMovies).toHaveBeenCalledWith(1);
     expect(component.movies.length).toBe(2);
     expect(component.isLoading).toBeFalse();
@@ -62,18 +58,13 @@ describe('Home Component', () => {
 
   it('should handle error when loading popular movies', () => {
     movieServiceSpy.getPopularMovies.and.returnValue(throwError(() => new Error('API error')));
-
     component.getPopularMovie();
-
     expect(component.isLoading).toBeFalse();
     expect(component.movies.length).toBe(0);
   });
-
   it('should search movies when query is provided', () => {
     movieServiceSpy.searchMovies.and.returnValue(of([dummyMovies[0]]));
-
     component.handleSearch('Movie 1');
-
     expect(movieServiceSpy.searchMovies).toHaveBeenCalledWith('Movie 1', 1);
     expect(component.movies.length).toBe(1);
     expect(component.movies[0].title).toBe('Movie 1');
@@ -82,22 +73,17 @@ describe('Home Component', () => {
 
   it('should reset to popular movies when query is empty', () => {
     movieServiceSpy.getPopularMovies.and.returnValue(of(dummyMovies));
-
     component.handleSearch('');
-
     expect(movieServiceSpy.getPopularMovies).toHaveBeenCalledWith(1);
     expect(component.movies.length).toBe(2);
   });
 
   it('should load more movies and append to list', () => {
     movieServiceSpy.getPopularMovies.and.returnValues(of(dummyMovies), of([dummyMovies[1]]));
-
     // first load
     component.getPopularMovie();
-
     // then load more
     component.loadMore();
-
     expect(movieServiceSpy.getPopularMovies).toHaveBeenCalledTimes(2);
     expect(component.movies.length).toBe(3); // 2 initial + 1 appended
     expect(component.isLoadingMore).toBeFalse();

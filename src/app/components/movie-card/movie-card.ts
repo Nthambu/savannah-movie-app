@@ -6,23 +6,22 @@ import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-movie-card',
-  
-  imports: [RouterLink,CommonModule,NgIf],
+  imports: [RouterLink, CommonModule, NgIf],
   templateUrl: './movie-card.html',
-  styleUrl: './movie-card.css'
+  styleUrl: './movie-card.css',
 })
 export class MovieCard {
-@Input() movie!:MovieDto;
- // A property to hold the full image URL
+  @Input() movie!: MovieDto;
+  // A property to hold the full image URL
   posterUrl: string = '';
-constructor(private movieService:MovieService){}
-ngOnInit(){
-   // Construct the full poster URL
-  if(this.movie && this.movie.poster_path){
-     this.posterUrl =`${this.movieService.imageBaseUrl}${this.movie.poster_path}`;
-}else{
-  // Provide a fallback image for robustness
-  this.posterUrl = 'https://placeholder.com/500x750?text=Image+Not+Available';
-}
-}
+  constructor(private movieService: MovieService) {}
+  ngOnInit() {
+    // full poster URL
+    if (this.movie && this.movie.poster_path) {
+      this.posterUrl = `${this.movieService.imageBaseUrl}${this.movie.poster_path}`;
+    } else {
+      //A  fallback image for robustness
+      this.posterUrl = 'https://placeholder.com/500x750?text=Image+Not+Available';
+    }
+  }
 }
