@@ -45,6 +45,7 @@ export class Home {
    */
   ngOnInit() {
     this.getPopularMovie();
+    
   }
   /**
    * Fetches the first page of popular movies from the MovieService.
@@ -59,6 +60,7 @@ export class Home {
       next: (response) => {
         this.movies = response;
         this.isLoading = false;
+        
       },
       error: (err) => {
         this.isLoading = false;
