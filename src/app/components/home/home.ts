@@ -5,6 +5,7 @@ import { MovieDto } from '../../models/movie.model';
 import { CommonModule} from '@angular/common';
 import { MovieCard } from '../movie-card/movie-card';
 import { SearchBar } from '../search-bar/search-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -20,12 +21,12 @@ export class Home {
   private currentPage = 1;
   private currentSearchQuery = '';
   isLoadingMore: boolean = false;
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService,private snackBar:MatSnackBar) {}
 
   ngOnInit() {
     this.getPopularMovie();
+    
   }
-  //Modified this to be a "reset" and first page load
   getPopularMovie(): void {
     this.isLoading = true;
     this.currentSearchQuery = ''; // Reset search query
@@ -34,14 +35,17 @@ export class Home {
       next: (response) => {
         this.movies = response;
         this.isLoading = false;
+        
       },
       error: (err) => {
         this.isLoading = false;
+        this.snackBar.open('an error occured while fetching  movies', 'Close',{
+  duration: 3000
+})
       },
     });
   }
-
-  //A method to handle events from the searchbar
+//A method to handle events from the searchbar
   handleSearch(query: string): void {
     this.isLoading = true;
     this.currentSearchQuery = query;
@@ -57,6 +61,9 @@ export class Home {
       },
       error: (err) => {
         this.isLoading = false;
+                this.snackBar.open('movie search failed', 'Close',{
+  duration: 3000
+})
       },
     });
   }
@@ -69,12 +76,16 @@ export class Home {
       : this.movieService.getPopularMovies(this.currentPage);
     observable.subscribe({
       next: (response) => {
-        // Use the spread (...) operator to append the new movies to the existing array
+
         this.movies = [...this.movies, ...response];
         this.isLoadingMore = false;
       },
       error: (err) => {
         this.isLoadingMore = false;
+         this.isLoading = false;
+        this.snackBar.open('failed to load more movies', 'Close',{
+  duration: 3000
+})
       },
     });
   }

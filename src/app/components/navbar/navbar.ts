@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-navbar',
   imports: [CommonModule],
@@ -10,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Navbar {
   public readonly user$;
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router,private snackBar:MatSnackBar) {
     this.user$ = this.authService.user$;
   }
 
@@ -18,10 +19,16 @@ export class Navbar {
     this.authService
       .loginWithGoogle()
       .then(() => {
-        // Optional: Redirect user after successful login
-        this.router.navigate(['/']);
+        //  Redirect user after successful login
+    this.snackBar.open('Login successful!', 'Close',{
+  duration: 3000
+});
+    this.router.navigate(['/']);
       })
-      .catch((error) => console.error('Login failed:', error));
+      .catch((error) => this.snackBar.open('Login failed!', 'Close',{
+  duration: 3000
+}));
+       
   }
 
   onLogout() {
@@ -30,7 +37,12 @@ export class Navbar {
       .then(() => {
         //  Redirect user to home after logout
         this.router.navigate(['/']);
+        this.snackBar.open('Logged out!', 'Close',{
+  duration: 3000
+})
       })
-      .catch((error) => console.error('Logout failed:', error));
+      .catch((error) => this.snackBar.open('Logout failed!', 'Close',{
+  duration: 3000
+}));
   }
 }
