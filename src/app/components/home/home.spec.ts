@@ -4,7 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MovieService } from '../../services/movie-service';
 import { of, throwError } from 'rxjs';
 import { MovieDto } from '../../models/movie.model';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 describe('Home Component', () => {
   let component: Home;
   let fixture: ComponentFixture<Home>;
@@ -33,10 +33,13 @@ describe('Home Component', () => {
       'searchMovies',
       'getMovieDetails',
     ]);
-
+    const snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open']);
     await TestBed.configureTestingModule({
       imports: [Home, HttpClientTestingModule],
-      providers: [{ provide: MovieService, useValue: spy }],
+      providers: [
+        { provide: MovieService, useValue: spy },
+        { provide: MatSnackBar, useValue: snackBarSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Home);
@@ -58,9 +61,15 @@ describe('Home Component', () => {
 
   it('should handle error when loading popular movies', () => {
     movieServiceSpy.getPopularMovies.and.returnValue(throwError(() => new Error('API error')));
+    const snackBarSpy = TestBed.inject(MatSnackBar) as jasmine.SpyObj<MatSnackBar>;
     component.getPopularMovie();
     expect(component.isLoading).toBeFalse();
     expect(component.movies.length).toBe(0);
+    expect(snackBarSpy.open).toHaveBeenCalledWith(
+      'an error occured while fetching  movies',
+      'Close',
+      { duration: 3000 }
+    );
   });
   it('should search movies when query is provided', () => {
     movieServiceSpy.searchMovies.and.returnValue(of([dummyMovies[0]]));
