@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MovieService } from '../../services/movie-service';
 import { MovieDto } from '../../models/movie.model';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { MovieCard } from '../movie-card/movie-card';
 import { SearchBar } from '../search-bar/search-bar';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, MovieCard, SearchBar, NgIf],
+  imports: [CommonModule, MovieCard, SearchBar],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -19,9 +19,9 @@ export class Home {
   // A state for pagination and search
   private currentPage = 1;
   private currentSearchQuery = '';
-  isLoadingMore: boolean = false; // To show a smaller spinner on the button
+  isLoadingMore: boolean = false;
   constructor(private movieService: MovieService) {}
-  //  Call the loading method in ngOnInit
+
   ngOnInit() {
     this.getPopularMovie();
   }
@@ -31,13 +31,12 @@ export class Home {
     this.currentSearchQuery = ''; // Reset search query
     this.currentPage = 1; // Reset to page 1
     this.movieService.getPopularMovies(this.currentPage).subscribe({
-      // The 'next' handler for a successful response
       next: (response) => {
         this.movies = response;
-        this.isLoading = false; // Set loading to false once data is received
+        this.isLoading = false;
       },
       error: (err) => {
-        this.isLoading = false; // Also stop loading on error
+        this.isLoading = false;
       },
     });
   }
@@ -75,7 +74,6 @@ export class Home {
         this.isLoadingMore = false;
       },
       error: (err) => {
-        console.error('Failed to load more movies:', err);
         this.isLoadingMore = false;
       },
     });

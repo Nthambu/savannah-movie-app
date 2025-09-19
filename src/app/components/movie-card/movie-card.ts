@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { MovieDto } from '../../models/movie.model';
 import { RouterLink } from '@angular/router';
 import { MovieService } from '../../services/movie-service';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-movie-card',
-  imports: [RouterLink, CommonModule, NgIf],
+  imports: [RouterLink, CommonModule],
   templateUrl: './movie-card.html',
   styleUrl: './movie-card.css',
 })
